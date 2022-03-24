@@ -3,7 +3,7 @@ class Game {
 
     }
 
-    next() {
+    next(): Array<string> {
         return ['.'];
     }
 }
