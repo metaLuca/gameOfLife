@@ -1,0 +1,24 @@
+{
+  "name": "gameoflife",
+  "version": "1.0.0",
+  "description": "kata gol",
+  "main": "main.ts",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^4.6.2"
+  },
+  "scripts": {
+    "start": "tsc main.ts && node main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/metaLuca/gameOfLife.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/metaLuca/gameOfLife/issues"
+  },
+  "homepage": "https://github.com/metaLuca/gameOfLife#readme"
+}
