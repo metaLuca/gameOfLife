@@ -1,6 +1,6 @@
 enum Status {
-    ALIVE = '*',
-    DEAD = '.'
+    ALIVE = "*",
+    DEAD = "."
 }
 
 class Game {
@@ -46,8 +46,8 @@ class Game {
 
 describe("Game of Life", () => {
 
-    const ALIVE = '*'
-    const DEAD = '.'
+    const ALIVE = "*";
+    const DEAD = ".";
 
     it("single live cell dies", () => {
         const matrix: Array<string> = [ALIVE];
@@ -57,12 +57,24 @@ describe("Game of Life", () => {
         expect(newMatrix).toEqual([DEAD]);
     });
 
-    it("live cell with two live neighbours lives", () => {
+    it("live cell with two live horizontal neighbours lives", () => {
         const matrix: Array<string> = [ALIVE, ALIVE, ALIVE,];
 
         const newMatrix: Array<string> = new Game(matrix).next();
 
         expect(newMatrix[1]).toEqual(ALIVE);
+    });
+
+    it("live cell with two live vertical neighbours lives", () => {
+        const matrix: Array<Array<string>> = [
+            [DEAD, ALIVE, DEAD],
+            [DEAD, ALIVE, DEAD],
+            [DEAD, ALIVE, DEAD]
+        ];
+
+        const newMatrix: Array<string> = new Game(matrix).next();
+
+        expect(newMatrix[1]).toEqual(DEAD);
     });
 
 });
