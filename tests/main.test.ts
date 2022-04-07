@@ -5,11 +5,15 @@ class Game {
         this.matrix = matrix;
     }
 
+    private isAlive(index: number) {
+        return this.matrix[index] === "*";
+    }
+
     next(): Array<string> {
         const result = [];
         for (let i = 0; i < this.matrix.length; i++) {
-            if (this.matrix[i] === "*") {
-                if (this.matrix[i - 1] === "*" && this.matrix[i + 1] === "*") {
+            if (this.isAlive(i)) {
+                if (this.countLiveNeighbours(i) === 2) {
                     result.push("*");
                 } else {
                     result.push(".");
@@ -19,6 +23,19 @@ class Game {
             }
         }
         return result;
+    }
+
+    private countLiveNeighbours(index: number) {
+        let totalLivingNeighbours = 0;
+
+        if (this.isAlive(index - 1)) {
+            totalLivingNeighbours++;
+        }
+        if (this.isAlive(index + 1)) {
+            totalLivingNeighbours++;
+        }
+
+        return totalLivingNeighbours;
     }
 }
 
