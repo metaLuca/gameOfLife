@@ -10,35 +10,40 @@ class Game {
         this.matrix = matrix;
     }
 
-    private isAlive(index: number) {
-        return this.matrix[0][index] === Status.ALIVE;
+    private isAlive(row: number, column: number) {
+        return this.matrix[row][column] === Status.ALIVE;
     }
 
     next(): Array<Array<string>> {
         const result = [];
 
-        const firstLine = this.matrix[0];
-        for (let i = 0; i < firstLine.length; i++) {
-            if (this.isAlive(i)) {
-                if (this.countAliveNeighbours(i) === 2) {
-                    result.push(Status.ALIVE);
+
+        for (let row = 0; row < this.matrix.length; row++) {
+            const line = this.matrix[row];
+            const newLine = [];
+            for (let column = 0; column < line.length; column++) {
+                if (this.isAlive(row, column)) {
+                    if (this.countAliveNeighbours(row, column) === 2) {
+                        newLine.push(Status.ALIVE);
+                    } else {
+                        newLine.push(Status.DEAD);
+                    }
                 } else {
-                    result.push(Status.DEAD);
+                    newLine.push(line[column]);
                 }
-            } else {
-                result.push(firstLine[i]);
             }
+            result.push(newLine);
         }
-        return [result];
+        return result;
     }
 
-    private countAliveNeighbours(index: number) {
+    private countAliveNeighbours(row: number, column: number) {
         let totalLivingNeighbours = 0;
 
-        if (this.isAlive(index - 1)) {
+        if (this.isAlive(row,column - 1)) {
             totalLivingNeighbours++;
         }
-        if (this.isAlive(index + 1)) {
+        if (this.isAlive(row,column + 1)) {
             totalLivingNeighbours++;
         }
 
@@ -76,11 +81,7 @@ describe("Game of Life", () => {
 
         const newMatrix: Array<Array<string>> = new Game(matrix).next();
 
-        expect(newMatrix).toEqual([
-            [DEAD, DEAD, DEAD],
-            [ALIVE, ALIVE, ALIVE],
-            [DEAD, DEAD, DEAD]
-        ]);
+        expect(newMatrix[1][1]).toEqual(ALIVE);
     });
 
 });
