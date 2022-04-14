@@ -4,7 +4,7 @@ enum Status {
 }
 
 export class Game {
-    private matrix: Array<Array<string>>;
+    private readonly matrix: Array<Array<string>>;
 
     constructor(matrix: Array<Array<string>>) {
         this.matrix = matrix;
