@@ -17,27 +17,31 @@ export class Game {
         return this.matrix[row][column] === Status.ALIVE;
     }
 
+    private isDead(row: number, column: number) {
+        return !this.isAlive(row, column);
+    }
+
     next(): Array<Array<string>> {
         const result = [];
-
-
         for (let row = 0; row < this.matrix.length; row++) {
             const line = this.matrix[row];
             const newLine = [];
             for (let column = 0; column < line.length; column++) {
-                if (this.isAlive(row, column)) {
-                    if (this.countAliveNeighbours(row, column) === 2) {
-                        newLine.push(Status.ALIVE);
-                    } else {
-                        newLine.push(Status.DEAD);
-                    }
-                } else {
-                    newLine.push(line[column]);
-                }
+                newLine.push(this.nextStatusFor(row, column))
             }
             result.push(newLine);
         }
         return result;
+    }
+
+    private nextStatusFor(row: number, column: number): string {
+        if (this.isDead(row, column)) {
+            return this.matrix[row][column];
+        }
+        if (this.countAliveNeighbours(row, column) === 2) {
+            return Status.ALIVE;
+        }
+        return Status.DEAD;
     }
 
     private countAliveNeighbours(row: number, column: number) {
