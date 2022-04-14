@@ -11,6 +11,9 @@ class Game {
     }
 
     private isAlive(row: number, column: number) {
+        if(!this.matrix[row]) {
+            return false;
+        }
         return this.matrix[row][column] === Status.ALIVE;
     }
 
@@ -46,6 +49,12 @@ class Game {
         if (this.isAlive(row,column + 1)) {
             totalLivingNeighbours++;
         }
+        if(this.isAlive(row -1, column)) {
+            totalLivingNeighbours ++;
+        }
+        if(this.isAlive(row +1, column)) {
+            totalLivingNeighbours ++;
+        }
 
         return totalLivingNeighbours;
     }
@@ -72,7 +81,7 @@ describe("Game of Life", () => {
         expect(newMatrix[0][1]).toEqual(ALIVE);
     });
 
-    it.skip("live cell with two live vertical neighbours lives", () => {
+    it("live cell with two live vertical neighbours lives", () => {
         const matrix: Array<Array<string>> = [
             [DEAD, ALIVE, DEAD],
             [DEAD, ALIVE, DEAD],
