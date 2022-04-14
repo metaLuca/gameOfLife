@@ -22,16 +22,11 @@ export class Game {
     }
 
     next(): Array<Array<string>> {
-        const result = [];
-        for (let row = 0; row < this.matrix.length; row++) {
-            const line = this.matrix[row];
-            const newLine = [];
-            for (let column = 0; column < line.length; column++) {
-                newLine.push(this.nextStatusFor(row, column))
-            }
-            result.push(newLine);
-        }
-        return result;
+        return this.matrix.map((row, rowIndex) => {
+            return row.map((column, columnIndex) => {
+                return this.nextStatusFor(rowIndex, columnIndex)
+            })
+        })
     }
 
     private nextStatusFor(row: number, column: number): string {
