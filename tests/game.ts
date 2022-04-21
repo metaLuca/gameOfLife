@@ -65,6 +65,14 @@ export class Game {
             totalLivingNeighbours++;
         }
 
+        if (this.isAlive(row - 1, column - 1)) {
+            totalLivingNeighbours++;
+        }
+
+        if (this.isAlive(row + 1, column + 1)) {
+            totalLivingNeighbours++;
+        }
+
         return totalLivingNeighbours;
     }
 }
