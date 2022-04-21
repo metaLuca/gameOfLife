@@ -1,9 +1,12 @@
+export type Board = Array<Array<string>>
+
 enum Status {
     ALIVE = "*",
     DEAD = "."
 }
 
-export type Board = Array<Array<string>>
+const BECOME_ALIVE_NEIGHBOURS_COUNTS = [3];
+const STAY_ALIVE_NEIGHBOURS_COUNTS = [2, 3];
 
 export class Game {
     private readonly matrix: Board;
@@ -34,17 +37,15 @@ export class Game {
     private nextStatusFor(row: number, column: number): string {
         let aliveNeighbours = this.countAliveNeighbours(row, column);
 
-        if (this.isDead(row, column)) {
-            if (aliveNeighbours === 3) {
-                return Status.ALIVE;
-            }
-            return this.matrix[row][column];
-        }
+        let aliveNeighboursCount = this.isDead(row, column)
+            ? BECOME_ALIVE_NEIGHBOURS_COUNTS
+            : STAY_ALIVE_NEIGHBOURS_COUNTS;
 
-        if (aliveNeighbours === 2 || aliveNeighbours === 3) {
+        if(aliveNeighboursCount.includes(aliveNeighbours)) {
             return Status.ALIVE;
+        } else {
+            return Status.DEAD;
         }
-        return Status.DEAD;
     }
 
     private countAliveNeighbours(row: number, column: number) {
