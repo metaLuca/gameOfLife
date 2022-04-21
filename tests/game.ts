@@ -3,10 +3,12 @@ enum Status {
     DEAD = "."
 }
 
-export class Game {
-    private readonly matrix: Array<Array<string>>;
+export type Board = Array<Array<string>>
 
-    constructor(matrix: Array<Array<string>>) {
+export class Game {
+    private readonly matrix: Board;
+
+    constructor(matrix: Board) {
         this.matrix = matrix;
     }
 
@@ -21,7 +23,7 @@ export class Game {
         return !this.isAlive(row, column);
     }
 
-    next(): Array<Array<string>> {
+    next(): Board {
         return this.matrix.map((row, rowIndex) => {
             return row.map((column, columnIndex) => {
                 return this.nextStatusFor(rowIndex, columnIndex)
