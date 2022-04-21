@@ -55,4 +55,16 @@ describe("Game of Life", () => {
 
         expect(newMatrix[1][1]).toEqual(ALIVE);
     });
+
+    it("live cell with three three neighbours lives", () => {
+        const matrix: Board = [
+            [ALIVE, ALIVE, DEAD],
+            [DEAD, ALIVE, DEAD],
+            [DEAD, DEAD, ALIVE]
+        ];
+
+        const newMatrix: Board = new Game(matrix).next();
+
+        expect(newMatrix[1][1]).toEqual(ALIVE);
+    });
 });

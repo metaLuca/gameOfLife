@@ -35,7 +35,8 @@ export class Game {
         if (this.isDead(row, column)) {
             return this.matrix[row][column];
         }
-        if (this.countAliveNeighbours(row, column) === 2) {
+        let aliveNeighbours = this.countAliveNeighbours(row, column);
+        if (aliveNeighbours === 2 || aliveNeighbours === 3) {
             return Status.ALIVE;
         }
         return Status.DEAD;
