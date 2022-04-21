@@ -42,37 +42,24 @@ export class Game {
     }
 
     private countAliveNeighbours(row: number, column: number) {
-        let totalLivingNeighbours = 0;
+        let positions = [
+            [row - 1, column - 1],
+            [row - 1, column],
+            [row - 1, column + 1],
+            [row, column - 1],
+            [row, column + 1],
+            [row + 1, column - 1],
+            [row + 1, column],
+            [row + 1, column + 1]
+        ]
 
-        if (this.isAlive(row, column - 1)) {
-            totalLivingNeighbours++;
-        }
-        if (this.isAlive(row, column + 1)) {
-            totalLivingNeighbours++;
-        }
-        if (this.isAlive(row - 1, column)) {
-            totalLivingNeighbours++;
-        }
-        if (this.isAlive(row + 1, column)) {
-            totalLivingNeighbours++;
-        }
+        return this.count(positions, (row, column) => this.isAlive(row, column))
+    }
 
-        if (this.isAlive(row - 1, column + 1)) {
-            totalLivingNeighbours++;
-        }
-
-        if (this.isAlive(row + 1, column - 1)) {
-            totalLivingNeighbours++;
-        }
-
-        if (this.isAlive(row - 1, column - 1)) {
-            totalLivingNeighbours++;
-        }
-
-        if (this.isAlive(row + 1, column + 1)) {
-            totalLivingNeighbours++;
-        }
-
-        return totalLivingNeighbours;
+    private count(positions: Array<Array<number>>, condition: (row: number, column: number) => boolean): number {
+        return positions.reduce((acc, [row, column]) => {
+            acc += condition(row, column) ? 1 : 0
+            return acc
+        }, 0)
     }
 }
