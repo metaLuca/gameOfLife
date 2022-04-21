@@ -32,10 +32,15 @@ export class Game {
     }
 
     private nextStatusFor(row: number, column: number): string {
+        let aliveNeighbours = this.countAliveNeighbours(row, column);
+
         if (this.isDead(row, column)) {
+            if (aliveNeighbours === 3) {
+                return Status.ALIVE;
+            }
             return this.matrix[row][column];
         }
-        let aliveNeighbours = this.countAliveNeighbours(row, column);
+
         if (aliveNeighbours === 2 || aliveNeighbours === 3) {
             return Status.ALIVE;
         }
