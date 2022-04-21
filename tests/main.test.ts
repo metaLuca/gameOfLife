@@ -31,4 +31,16 @@ describe("Game of Life", () => {
 
         expect(newMatrix[1][1]).toEqual(ALIVE);
     });
+
+    it("live cell with two live diagonal top-right and bottom-left neighbours lives", () => {
+        const matrix: Board = [
+            [DEAD, DEAD, ALIVE],
+            [DEAD, ALIVE, DEAD],
+            [ALIVE, DEAD, DEAD]
+        ];
+
+        const newMatrix: Board = new Game(matrix).next();
+
+        expect(newMatrix[1][1]).toEqual(ALIVE);
+    });
 });
