@@ -8,15 +8,20 @@ export class Game {
     private readonly board: NewBoard;
 
     constructor(matrix: Board) {
-        this.board = new NewBoard(matrix)
+        this.board = new NewBoard(matrix);
     }
 
     next(): Board {
+        return this.loopCells((rowIndex: number, columnIndex: number) => this.nextStatusFor(rowIndex, columnIndex));
+    }
+
+    // TODO: Valutare se è spostabile dentro la classe NewBoard
+    private loopCells(callback: (rowIndex: number, columnIndex: number) => Status) {
         return this.board.board.map((row, rowIndex) => {
             return row.map((column, columnIndex) => {
-                return this.nextStatusFor(rowIndex, columnIndex)
-            })
-        })
+                return callback(rowIndex, columnIndex);
+            });
+        });
     }
 
     private nextStatusFor(row: number, column: number): Status {
@@ -26,7 +31,7 @@ export class Game {
             ? BECOME_ALIVE_NEIGHBOURS_COUNTS
             : STAY_ALIVE_NEIGHBOURS_COUNTS;
 
-        if(aliveNeighboursCount.includes(aliveNeighbours)) {
+        if (aliveNeighboursCount.includes(aliveNeighbours)) {
             return Status.ALIVE;
         } else {
             return Status.DEAD;
@@ -43,15 +48,15 @@ export class Game {
             [row + 1, column - 1],
             [row + 1, column],
             [row + 1, column + 1]
-        ]
+        ];
 
-        return this.count(positions, (row, column) => this.board.isAlive(row, column))
+        return this.count(positions, (row, column) => this.board.isAlive(row, column));
     }
 
     private count(positions: Array<Array<number>>, condition: (row: number, column: number) => boolean): number {
         return positions.reduce((acc, [row, column]) => {
-            acc += condition(row, column) ? 1 : 0
-            return acc
-        }, 0)
+            acc += condition(row, column) ? 1 : 0;
+            return acc;
+        }, 0);
     }
 }
