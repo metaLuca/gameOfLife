@@ -1,8 +1,9 @@
-import {Board, Game} from "./game";
+import {Game} from "../game";
+import {Board, Status} from "../types";
 
 describe("Game of Life", () => {
-    const ALIVE = "*";
-    const DEAD = ".";
+    const ALIVE = Status.ALIVE;
+    const DEAD = Status.DEAD;
 
     it("single live cell dies", () => {
         const matrix: Board = [[ALIVE]];

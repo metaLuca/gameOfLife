@@ -1,43 +1,28 @@
-export type Board = Array<Array<string>>
-
-enum Status {
-    ALIVE = "*",
-    DEAD = "."
-}
+import {Board, Status} from "./types";
+import {NewBoard} from "./NewBoard";
 
 const BECOME_ALIVE_NEIGHBOURS_COUNTS = [3];
 const STAY_ALIVE_NEIGHBOURS_COUNTS = [2, 3];
 
 export class Game {
-    private readonly matrix: Board;
+    private readonly board: NewBoard;
 
     constructor(matrix: Board) {
-        this.matrix = matrix;
-    }
-
-    private isAlive(row: number, column: number) {
-        if (!this.matrix[row]) {
-            return false;
-        }
-        return this.matrix[row][column] === Status.ALIVE;
-    }
-
-    private isDead(row: number, column: number) {
-        return !this.isAlive(row, column);
+        this.board = new NewBoard(matrix)
     }
 
     next(): Board {
-        return this.matrix.map((row, rowIndex) => {
+        return this.board.board.map((row, rowIndex) => {
             return row.map((column, columnIndex) => {
                 return this.nextStatusFor(rowIndex, columnIndex)
             })
         })
     }
 
-    private nextStatusFor(row: number, column: number): string {
+    private nextStatusFor(row: number, column: number): Status {
         let aliveNeighbours = this.countAliveNeighbours(row, column);
 
-        let aliveNeighboursCount = this.isDead(row, column)
+        let aliveNeighboursCount = this.board.isDead(row, column)
             ? BECOME_ALIVE_NEIGHBOURS_COUNTS
             : STAY_ALIVE_NEIGHBOURS_COUNTS;
 
@@ -60,7 +45,7 @@ export class Game {
             [row + 1, column + 1]
         ]
 
-        return this.count(positions, (row, column) => this.isAlive(row, column))
+        return this.count(positions, (row, column) => this.board.isAlive(row, column))
     }
 
     private count(positions: Array<Array<number>>, condition: (row: number, column: number) => boolean): number {
