@@ -1,5 +1,11 @@
 import {Status} from "./types";
 
+//TODO use Position instead of row column
+interface Position {
+    row: number;
+    column: number;
+}
+
 export class Board {
     private readonly board: Array<Array<Status>>;
 
