@@ -1,5 +1,6 @@
 import {Game} from "../game";
 import {Board, Status} from "../types";
+import {NewBoard} from "../NewBoard";
 
 describe("Game of Life", () => {
     const ALIVE = Status.ALIVE;
@@ -8,17 +9,17 @@ describe("Game of Life", () => {
     it("single live cell dies", () => {
         const matrix: Board = [[ALIVE]];
 
-        const newMatrix: Board = new Game(matrix).next();
+        const newMatrix: NewBoard = new Game(matrix).next();
 
-        expect(newMatrix[0]).toEqual([DEAD]);
+        expect(newMatrix.board[0]).toEqual([DEAD]);
     });
 
     it("live cell with two live horizontal neighbours lives", () => {
         const matrix: Board = [[ALIVE, ALIVE, ALIVE,]];
 
-        const newMatrix: Board = new Game(matrix).next();
+        const newMatrix: NewBoard = new Game(matrix).next();
 
-        expect(newMatrix[0][1]).toEqual(ALIVE);
+        expect(newMatrix.board[0][1]).toEqual(ALIVE);
     });
 
     it("live cell with two live vertical neighbours lives", () => {
@@ -28,9 +29,9 @@ describe("Game of Life", () => {
             [DEAD, ALIVE, DEAD]
         ];
 
-        const newMatrix: Board = new Game(matrix).next();
+        const newMatrix: NewBoard = new Game(matrix).next();
 
-        expect(newMatrix[1][1]).toEqual(ALIVE);
+        expect(newMatrix.board[1][1]).toEqual(ALIVE);
     });
 
     it("live cell with two live diagonal top-right and bottom-left neighbours lives", () => {
@@ -40,9 +41,9 @@ describe("Game of Life", () => {
             [ALIVE, DEAD, DEAD]
         ];
 
-        const newMatrix: Board = new Game(matrix).next();
+        const newMatrix: NewBoard = new Game(matrix).next();
 
-        expect(newMatrix[1][1]).toEqual(ALIVE);
+        expect(newMatrix.board[1][1]).toEqual(ALIVE);
     });
 
     it("live cell with two live diagonal top-left and bottom-right neighbours lives", () => {
@@ -52,9 +53,9 @@ describe("Game of Life", () => {
             [DEAD, DEAD, ALIVE]
         ];
 
-        const newMatrix: Board = new Game(matrix).next();
+        const newMatrix: NewBoard = new Game(matrix).next();
 
-        expect(newMatrix[1][1]).toEqual(ALIVE);
+        expect(newMatrix.board[1][1]).toEqual(ALIVE);
     });
 
     it("live cell with three three neighbours lives", () => {
@@ -64,9 +65,9 @@ describe("Game of Life", () => {
             [DEAD, DEAD, ALIVE]
         ];
 
-        const newMatrix: Board = new Game(matrix).next();
+        const newMatrix: NewBoard = new Game(matrix).next();
 
-        expect(newMatrix[1][1]).toEqual(ALIVE);
+        expect(newMatrix.board[1][1]).toEqual(ALIVE);
     });
 
     it("live cell with four neighbours dies", () => {
@@ -76,9 +77,9 @@ describe("Game of Life", () => {
             [ALIVE, ALIVE, DEAD]
         ];
 
-        const newMatrix: Board = new Game(matrix).next();
+        const newMatrix: NewBoard = new Game(matrix).next();
 
-        expect(newMatrix[1][1]).toEqual(DEAD);
+        expect(newMatrix.board[1][1]).toEqual(DEAD);
     });
 
     it("dead cell with three neighbours become alive", () => {
@@ -88,8 +89,8 @@ describe("Game of Life", () => {
             [DEAD, DEAD, DEAD]
         ];
 
-        const newMatrix: Board = new Game(matrix).next();
+        const newMatrix: NewBoard = new Game(matrix).next();
 
-        expect(newMatrix[1][1]).toEqual(ALIVE);
+        expect(newMatrix.board[1][1]).toEqual(ALIVE);
     });
 });

@@ -11,17 +11,8 @@ export class Game {
         this.board = new NewBoard(matrix);
     }
 
-    next(): Board {
-        return this.loopCells((rowIndex: number, columnIndex: number) => this.nextStatusFor(rowIndex, columnIndex));
-    }
-
-    // TODO: Valutare se è spostabile dentro la classe NewBoard
-    private loopCells(callback: (rowIndex: number, columnIndex: number) => Status) {
-        return this.board.board.map((row, rowIndex) => {
-            return row.map((column, columnIndex) => {
-                return callback(rowIndex, columnIndex);
-            });
-        });
+    next(): NewBoard {
+        return this.board.next((rowIndex: number, columnIndex: number) => this.nextStatusFor(rowIndex, columnIndex));
     }
 
     private nextStatusFor(row: number, column: number): Status {

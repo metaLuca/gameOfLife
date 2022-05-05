@@ -3,7 +3,7 @@ import {Board, Status} from "./types";
 export class NewBoard {
     public readonly board: Board;
 
-    constructor(board:  Board) {
+    constructor(board: Board) {
         this.board = board;
     }
 
@@ -16,5 +16,15 @@ export class NewBoard {
 
     public isDead(row: number, column: number) {
         return !this.isAlive(row, column);
+    }
+
+    public next(callback: (rowIndex: number, columnIndex: number) => Status): NewBoard {
+        return new NewBoard(
+            this.board.map((row, rowIndex) => {
+                return row.map((column, columnIndex) => {
+                    return callback(rowIndex, columnIndex);
+                });
+            })
+        );
     }
 }
