@@ -1,7 +1,7 @@
 import {Board, Status} from "./types";
 
 export class NewBoard {
-    public readonly board: Board;
+    private readonly board: Board;
 
     constructor(board: Board) {
         this.board = board;
