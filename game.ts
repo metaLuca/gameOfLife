@@ -1,17 +1,17 @@
-import {Board, Status} from "./types";
-import {NewBoard} from "./NewBoard";
+import {Status} from "./types";
+import {Board} from "./Board";
 
 const BECOME_ALIVE_NEIGHBOURS_COUNTS = [3];
 const STAY_ALIVE_NEIGHBOURS_COUNTS = [2, 3];
 
 export class Game {
-    private readonly board: NewBoard;
+    private readonly board: Board;
 
-    constructor(matrix: Board) {
-        this.board = new NewBoard(matrix);
+    constructor(board: Board) {
+        this.board = board;
     }
 
-    next(): NewBoard {
+    next(): Board {
         return this.board.next((rowIndex: number, columnIndex: number) => this.nextStatusFor(rowIndex, columnIndex));
     }
 

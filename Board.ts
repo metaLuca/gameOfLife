@@ -1,9 +1,9 @@
-import {Board, Status} from "./types";
+import {Status} from "./types";
 
-export class NewBoard {
-    private readonly board: Board;
+export class Board {
+    private readonly board: Array<Array<Status>>;
 
-    constructor(board: Board) {
+    constructor(board: Array<Array<Status>>) {
         this.board = board;
     }
 
@@ -18,8 +18,8 @@ export class NewBoard {
         return !this.isAlive(row, column);
     }
 
-    public next(callback: (rowIndex: number, columnIndex: number) => Status): NewBoard {
-        return new NewBoard(
+    public next(callback: (rowIndex: number, columnIndex: number) => Status): Board {
+        return new Board(
             this.board.map((row, rowIndex) => {
                 return row.map((column, columnIndex) => {
                     return callback(rowIndex, columnIndex);
