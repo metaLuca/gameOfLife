@@ -1,5 +1,5 @@
 import {Status} from "./types";
-import {Board} from "./Board";
+import {Board, Position} from "./Board";
 
 const BECOME_ALIVE_NEIGHBOURS_COUNTS = [3];
 const STAY_ALIVE_NEIGHBOURS_COUNTS = [2, 3];
@@ -12,13 +12,13 @@ export class Game {
     }
 
     next(): Board {
-        return this.board.next((rowIndex: number, columnIndex: number) => this.nextStatusFor(rowIndex, columnIndex));
+        return this.board.next((position: Position) => this.nextStatusFor(position.row, position.column));
     }
 
     private nextStatusFor(row: number, column: number): Status {
         let aliveNeighbours = this.countAliveNeighbours(row, column);
 
-        let aliveNeighboursCount = this.board.isDead(row, column)
+        let aliveNeighboursCount = this.board.isDead({row, column})
             ? BECOME_ALIVE_NEIGHBOURS_COUNTS
             : STAY_ALIVE_NEIGHBOURS_COUNTS;
 
@@ -41,7 +41,7 @@ export class Game {
             [row + 1, column + 1]
         ];
 
-        return this.count(positions, (row, column) => this.board.isAlive(row, column));
+        return this.count(positions, (row, column) => this.board.isAlive({row, column}));
     }
 
     private count(positions: Array<Array<number>>, condition: (row: number, column: number) => boolean): number {

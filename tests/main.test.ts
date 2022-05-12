@@ -11,7 +11,7 @@ describe("Game of Life", () => {
 
         const newBoard: Board = new Game(board).next();
 
-        expect(newBoard.isDead(0,0)).toBeTruthy();
+        expect(newBoard.isDead({row: 0, column: 0})).toBeTruthy();
     });
 
     it("live cell with two live horizontal neighbours lives", () => {
@@ -19,7 +19,7 @@ describe("Game of Life", () => {
 
         const newBoard: Board = new Game(board).next();
 
-        expect(newBoard.isAlive(0,1)).toBeTruthy();
+        expect(newBoard.isAlive({row: 0, column: 1})).toBeTruthy();
     });
 
     it("live cell with two live vertical neighbours lives", () => {
@@ -31,7 +31,7 @@ describe("Game of Life", () => {
 
         const newBoard: Board = new Game(board).next();
 
-        expect(newBoard.isAlive(1,1)).toBeTruthy();
+        expect(newBoard.isAlive({row: 1, column: 1})).toBeTruthy();
     });
 
     it("live cell with two live diagonal top-right and bottom-left neighbours lives", () => {
@@ -43,7 +43,7 @@ describe("Game of Life", () => {
 
         const newBoard: Board = new Game(board).next();
 
-        expect(newBoard.isAlive(1,1)).toBeTruthy();
+        expect(newBoard.isAlive({row: 1, column: 1})).toBeTruthy();
     });
 
     it("live cell with two live diagonal top-left and bottom-right neighbours lives", () => {
@@ -55,7 +55,7 @@ describe("Game of Life", () => {
 
         const newBoard: Board = new Game(board).next();
 
-        expect(newBoard.isAlive(1,1)).toBeTruthy();
+        expect(newBoard.isAlive({row: 1, column: 1})).toBeTruthy();
     });
 
     it("live cell with three three neighbours lives", () => {
@@ -67,7 +67,7 @@ describe("Game of Life", () => {
 
         const newBoard: Board = new Game(board).next();
 
-        expect(newBoard.isAlive(1,1)).toBeTruthy();
+        expect(newBoard.isAlive({row: 1, column: 1})).toBeTruthy();
     });
 
     it("live cell with four neighbours dies", () => {
@@ -79,7 +79,7 @@ describe("Game of Life", () => {
 
         const newBoard: Board = new Game(board).next();
 
-        expect(newBoard.isDead(1,1)).toBeTruthy();
+        expect(newBoard.isDead({row: 1, column: 1})).toBeTruthy();
     });
 
     it("dead cell with three neighbours become alive", () => {
@@ -91,6 +91,6 @@ describe("Game of Life", () => {
 
         const newBoard: Board = new Game(board).next();
 
-        expect(newBoard.isAlive(1,1)).toBeTruthy();
+        expect(newBoard.isAlive({row: 1, column: 1})).toBeTruthy();
     });
 });

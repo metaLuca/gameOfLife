@@ -1,7 +1,7 @@
 import {Status} from "./types";
 
 //TODO use Position instead of row column
-interface Position {
+export interface Position {
     row: number;
     column: number;
 }
@@ -13,22 +13,22 @@ export class Board {
         this.board = board;
     }
 
-    public isAlive(row: number, column: number) {
-        if (!this.board[row]) {
+    public isAlive(position: Position) {
+        if (!this.board[position.row]) {
             return false;
         }
-        return this.board[row][column] === Status.ALIVE;
+        return this.board[position.row][position.column] === Status.ALIVE;
     }
 
-    public isDead(row: number, column: number) {
-        return !this.isAlive(row, column);
+    public isDead(position: Position) {
+        return !this.isAlive(position);
     }
 
-    public next(callback: (rowIndex: number, columnIndex: number) => Status): Board {
+    public next(callback: (position: Position) => Status): Board {
         return new Board(
             this.board.map((row, rowIndex) => {
                 return row.map((column, columnIndex) => {
-                    return callback(rowIndex, columnIndex);
+                    return callback({row: rowIndex, column: columnIndex});
                 });
             })
         );
