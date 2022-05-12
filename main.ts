@@ -7,15 +7,18 @@ function main () {
     const DEAD = Status.DEAD;
 
     const game = new Game(new Board([
-        [ALIVE, ALIVE, ALIVE],
-        [DEAD, DEAD, DEAD],
-        [DEAD, DEAD, DEAD]
+        [DEAD, ALIVE, DEAD],
+        [DEAD, ALIVE, DEAD],
+        [DEAD, ALIVE, DEAD]
     ]))
 
     let i = 1
     setInterval(() => {
+        console.log("\u001b[H\u001b[2J")
         console.log("GENERATION", i)
-        console.log(game.next())
+        game.next().forEach(arr => {
+            console.log(arr)
+        })
         console.log("-----------------")
         i += 1
     }, 1000)
