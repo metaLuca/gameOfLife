@@ -1,27 +1,23 @@
-import {Game} from "./game";
-import {Board} from "./board";
 import {Status} from "./status";
+import {CliPrinter} from "./cliPrinter";
+import {Game, Generation} from "./game";
 
-function main () {
-    const ALIVE = Status.ALIVE;
-    const DEAD = Status.DEAD;
+function loop(interval: number, startingGeneration: Generation) {
+    const printer = new CliPrinter(console.log)
+    const game = new Game(startingGeneration)
 
-    const game = new Game(new Board([
-        [DEAD, ALIVE, DEAD],
-        [DEAD, ALIVE, DEAD],
-        [DEAD, ALIVE, DEAD]
-    ]))
-
-    let i = 1
+    let i = 0
+    printer.print(i, startingGeneration)
     setInterval(() => {
-        console.log("\u001b[H\u001b[2J")
-        console.log("GENERATION", i)
-        game.next().forEach(arr => {
-            console.log(arr)
-        })
-        console.log("-----------------")
         i += 1
-    }, 1000)
+        printer.print(i, game.next())
+    }, interval)
 }
 
-main()
+loop(1000, [
+    [Status.DEAD, Status.DEAD, Status.DEAD, Status.DEAD, Status.DEAD],
+    [Status.DEAD, Status.DEAD, Status.ALIVE, Status.DEAD, Status.DEAD],
+    [Status.DEAD, Status.DEAD, Status.ALIVE, Status.DEAD, Status.DEAD],
+    [Status.DEAD, Status.DEAD, Status.ALIVE, Status.DEAD, Status.DEAD],
+    [Status.DEAD, Status.DEAD, Status.DEAD, Status.DEAD, Status.DEAD]
+])

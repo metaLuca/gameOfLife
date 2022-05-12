@@ -7,13 +7,12 @@ export type Generation = Array<Array<Status>>
 export class Game {
     private readonly board: Board;
 
-    constructor(board: Board) {
-        this.board = board;
+    constructor(starting: Generation) {
+        this.board = new Board(starting);
     }
 
     next(): Generation {
-        this.board.nextGeneration(position => this.nextCellStatus(position));
-        return this.board.generation()
+        return this.board.nextGeneration(position => this.nextCellStatus(position));
     }
 
     private nextCellStatus(position: Position): Status {
