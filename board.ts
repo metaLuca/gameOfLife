@@ -1,18 +1,23 @@
 import {Status} from "./status";
 import {Position} from "./position";
+import {Generation} from "./game";
 
 export class Board {
-    private board: Array<Array<Status>>;
+    private _generation: Generation;
 
-    constructor(board: Array<Array<Status>>) {
-        this.board = board;
+    constructor(board: Generation) {
+        this._generation = board;
+    }
+
+    get generation(): Generation {
+        return this._generation;
     }
 
     public isAlive(position: Position) {
-        if (!this.board[position.row]) {
+        if (!this._generation[position.row]) {
             return false;
         }
-        return this.board[position.row][position.column] === Status.ALIVE;
+        return this._generation[position.row][position.column] === Status.ALIVE;
     }
 
     public isDead(position: Position) {
@@ -20,7 +25,7 @@ export class Board {
     }
 
     public nextGeneration(callback: (position: Position) => Status) {
-        this.board = this.board.map((rowStatus, row) => {
+        this._generation = this._generation.map((rowStatus, row) => {
             return rowStatus.map((columnStatus, column) => {
                 return callback(new Position(row, column));
             });

@@ -1,7 +1,6 @@
 import {Game} from "../game";
 import {Status} from "../status";
 import {Board} from "../board";
-import {Position} from "../position";
 
 describe("Game of Life", () => {
     const ALIVE = Status.ALIVE;
@@ -10,17 +9,17 @@ describe("Game of Life", () => {
     it("single live cell dies", () => {
         const board: Board = new Board([[ALIVE]]);
 
-        const newBoard: Board = new Game(board).next();
+        const newGeneration = new Game(board).next();
 
-        expect(newBoard.isDead(new Position(0, 0))).toBeTruthy();
+        expect(newGeneration[0][0]).toEqual(DEAD)
     });
 
     it("live cell with two live horizontal neighbours lives", () => {
         const board: Board = new Board([[ALIVE, ALIVE, ALIVE,]]);
 
-        const newBoard: Board = new Game(board).next();
+        const newGeneration = new Game(board).next();
 
-        expect(newBoard.isAlive(new Position(0, 1))).toBeTruthy();
+        expect(newGeneration[0][1]).toEqual(ALIVE);
     });
 
     it("live cell with two live vertical neighbours lives", () => {
@@ -30,9 +29,9 @@ describe("Game of Life", () => {
             [DEAD, ALIVE, DEAD]
         ]);
 
-        const newBoard: Board = new Game(board).next();
+        const newGeneration = new Game(board).next();
 
-        expect(newBoard.isAlive(new Position(1, 1))).toBeTruthy();
+        expect(newGeneration[1][1]).toEqual(ALIVE);
     });
 
     it("live cell with two live diagonal top-right and bottom-left neighbours lives", () => {
@@ -42,9 +41,9 @@ describe("Game of Life", () => {
             [ALIVE, DEAD, DEAD]
         ]);
 
-        const newBoard: Board = new Game(board).next();
+        const newGeneration = new Game(board).next();
 
-        expect(newBoard.isAlive(new Position(1, 1))).toBeTruthy();
+        expect(newGeneration[1][1]).toEqual(ALIVE);
     });
 
     it("live cell with two live diagonal top-left and bottom-right neighbours lives", () => {
@@ -54,9 +53,9 @@ describe("Game of Life", () => {
             [DEAD, DEAD, ALIVE]
         ]);
 
-        const newBoard: Board = new Game(board).next();
+        const newGeneration = new Game(board).next();
 
-        expect(newBoard.isAlive(new Position(1, 1))).toBeTruthy();
+        expect(newGeneration[1][1]).toEqual(ALIVE);
     });
 
     it("live cell with three three neighbours lives", () => {
@@ -66,9 +65,9 @@ describe("Game of Life", () => {
             [DEAD, DEAD, ALIVE]
         ]);
 
-        const newBoard: Board = new Game(board).next();
+        const newGeneration = new Game(board).next();
 
-        expect(newBoard.isAlive(new Position(1, 1))).toBeTruthy();
+        expect(newGeneration[1][1]).toEqual(ALIVE);
     });
 
     it("live cell with four neighbours dies", () => {
@@ -78,9 +77,9 @@ describe("Game of Life", () => {
             [ALIVE, ALIVE, DEAD]
         ]);
 
-        const newBoard: Board = new Game(board).next();
+        const newGeneration = new Game(board).next();
 
-        expect(newBoard.isDead(new Position(1, 1))).toBeTruthy();
+        expect(newGeneration[1][1]).toEqual(DEAD)
     });
 
     it("dead cell with three neighbours become alive", () => {
@@ -90,9 +89,9 @@ describe("Game of Life", () => {
             [DEAD, DEAD, DEAD]
         ]);
 
-        const newBoard: Board = new Game(board).next();
+        const newGeneration = new Game(board).next();
 
-        expect(newBoard.isAlive(new Position(1, 1))).toBeTruthy();
+        expect(newGeneration[1][1]).toEqual(ALIVE);
     });
 
     it("next 2 generations", () => {
@@ -104,8 +103,24 @@ describe("Game of Life", () => {
 
         let game = new Game(board);
         game.next();
-        const twoNextBoard: Board = game.next();
+        const twoNextGeneration = game.next();
 
-        expect(twoNextBoard.isDead(new Position(1, 1))).toBeTruthy();
+        expect(twoNextGeneration[1][1]).toEqual(DEAD);
+    });
+
+    it("game should return all the board statuses", () => {
+        const board: Board = new Board([
+            [ALIVE, ALIVE, ALIVE],
+            [DEAD, DEAD, DEAD],
+            [DEAD, DEAD, DEAD]
+        ]);
+
+        let game = new Game(board);
+
+        expect(game.next()).toEqual([
+            [DEAD, ALIVE, DEAD],
+            [DEAD, ALIVE, DEAD],
+            [DEAD, DEAD, DEAD]
+        ])
     });
 });

@@ -2,6 +2,8 @@ import {Status} from "./status";
 import {Board} from "./board";
 import {Position} from "./position";
 
+export type Generation = Array<Array<Status>>
+
 export class Game {
     private readonly board: Board;
 
@@ -9,9 +11,9 @@ export class Game {
         this.board = board;
     }
 
-    next(): Board {
+    next(): Generation {
         this.board.nextGeneration(position => this.nextCellStatus(position));
-        return this.board
+        return this.board.generation
     }
 
     private nextCellStatus(position: Position): Status {
