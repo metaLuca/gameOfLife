@@ -13,7 +13,7 @@ export class Game {
 
     next(): Generation {
         this.board.nextGeneration(position => this.nextCellStatus(position));
-        return this.board.generation
+        return this.board.generation()
     }
 
     private nextCellStatus(position: Position): Status {

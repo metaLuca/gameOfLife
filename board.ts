@@ -9,7 +9,7 @@ export class Board {
         this._generation = board;
     }
 
-    get generation(): Generation {
+    generation(): Generation {
         return this._generation;
     }
 
