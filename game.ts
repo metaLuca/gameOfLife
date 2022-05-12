@@ -31,23 +31,23 @@ export class Game {
 
     private countAliveNeighbours({row, column}: Position) {
         //TODO move to position
-        const neighbours = [
-            [row - 1, column - 1],
-            [row - 1, column],
-            [row - 1, column + 1],
-            [row, column - 1],
-            [row, column + 1],
-            [row + 1, column - 1],
-            [row + 1, column],
-            [row + 1, column + 1]
+        const neighbours: Array<Position> = [
+            {row: row - 1, column: column - 1},
+            {row: row - 1, column: column},
+            {row: row - 1, column: column + 1},
+            {row: row, column: column - 1},
+            {row: row, column: column + 1},
+            {row: row + 1, column: column - 1},
+            {row: row + 1, column: column},
+            {row: row + 1, column: column + 1}
         ];
 
         return this.count(neighbours, (position: Position) => this.board.isAlive(position));
     }
 
-    private count(positions: Array<Array<number>>, condition: (position: Position) => boolean): number {
-        return positions.reduce((acc, [row, column]) => {
-            acc += condition({row, column}) ? 1 : 0;
+    private count(neighbours: Array<Position>, condition: (position: Position) => boolean): number {
+        return neighbours.reduce((acc, position: Position) => {
+            acc += condition(position) ? 1 : 0;
             return acc;
         }, 0);
     }
