@@ -3,6 +3,7 @@ import {Status} from "./types";
 export interface Position {
     row: number;
     column: number;
+    neighbours: () => Array<Position>
 }
 
 export class Board {
@@ -25,9 +26,19 @@ export class Board {
 
     public next(callback: (position: Position) => Status): Board {
         return new Board(
-            this.board.map((row, rowIndex) => {
-                return row.map((column, columnIndex) => {
-                    return callback({row: rowIndex, column: columnIndex});
+            this.board.map((rowStatus, row) => {
+                return rowStatus.map((columnStatus, column) => {
+                    const neighbours: () => Array<Position> = () => [
+                        {neighbours: () => [], row: row - 1, column: column - 1},
+                        {neighbours: () => [], row: row - 1, column: column},
+                        {neighbours: () => [], row: row - 1, column: column + 1},
+                        {neighbours: () => [], row: row, column: column - 1},
+                        {neighbours: () => [], row: row, column: column + 1},
+                        {neighbours: () => [], row: row + 1, column: column - 1},
+                        {neighbours: () => [], row: row + 1, column: column},
+                        {neighbours: () => [], row: row + 1, column: column + 1}
+                    ];
+                    return callback({row: row, column: column, neighbours});
                 });
             })
         );

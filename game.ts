@@ -29,20 +29,8 @@ export class Game {
         }
     }
 
-    private countAliveNeighbours({row, column}: Position) {
-        //TODO move to position
-        const neighbours: Array<Position> = [
-            {row: row - 1, column: column - 1},
-            {row: row - 1, column: column},
-            {row: row - 1, column: column + 1},
-            {row: row, column: column - 1},
-            {row: row, column: column + 1},
-            {row: row + 1, column: column - 1},
-            {row: row + 1, column: column},
-            {row: row + 1, column: column + 1}
-        ];
-
-        return this.count(neighbours, (position: Position) => this.board.isAlive(position));
+    private countAliveNeighbours(position: Position) {
+        return this.count(position.neighbours(), position => this.board.isAlive(position));
     }
 
     private count(neighbours: Array<Position>, condition: (position: Position) => boolean): number {
