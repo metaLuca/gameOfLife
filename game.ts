@@ -12,11 +12,11 @@ export class Game {
     }
 
     next(): Board {
-        return this.board.next(this.nextStatusFor.bind(this));
+        return this.board.next(this.nextCellStatus.bind(this));
     }
 
-    private nextStatusFor(position: Position): Status {
-        let aliveNeighbours = this.countAliveNeighbours(position.row, position.column);
+    private nextCellStatus(position: Position): Status {
+        let aliveNeighbours = this.countAliveNeighbours(position);
 
         let aliveNeighboursCount = this.board.isDead(position)
             ? BECOME_ALIVE_NEIGHBOURS_COUNTS
@@ -29,8 +29,9 @@ export class Game {
         }
     }
 
-    private countAliveNeighbours(row: number, column: number) {
-        let positions = [
+    private countAliveNeighbours({row, column}: Position) {
+        //TODO move to position
+        const neighbours = [
             [row - 1, column - 1],
             [row - 1, column],
             [row - 1, column + 1],
@@ -41,12 +42,12 @@ export class Game {
             [row + 1, column + 1]
         ];
 
-        return this.count(positions, (row, column) => this.board.isAlive({row, column}));
+        return this.count(neighbours, (position: Position) => this.board.isAlive(position));
     }
 
-    private count(positions: Array<Array<number>>, condition: (row: number, column: number) => boolean): number {
+    private count(positions: Array<Array<number>>, condition: (position: Position) => boolean): number {
         return positions.reduce((acc, [row, column]) => {
-            acc += condition(row, column) ? 1 : 0;
+            acc += condition({row, column}) ? 1 : 0;
             return acc;
         }, 0);
     }
