@@ -2,9 +2,6 @@ import {Status} from "./status";
 import {Board} from "./board";
 import {Position} from "./position";
 
-const BECOME_ALIVE_NEIGHBOURS_COUNTS = [3];
-const STAY_ALIVE_NEIGHBOURS_COUNTS = [2, 3];
-
 export class Game {
     private readonly board: Board;
 
@@ -17,17 +14,21 @@ export class Game {
     }
 
     private nextCellStatus(position: Position): Status {
-        const aliveNeighbours = this.countAliveNeighbours(position);
-
-        const aliveNeighboursCount = this.board.isDead(position)
-            ? BECOME_ALIVE_NEIGHBOURS_COUNTS
-            : STAY_ALIVE_NEIGHBOURS_COUNTS;
-
-        if (aliveNeighboursCount.includes(aliveNeighbours)) {
+        if (this.shouldStayAlive(position) || this.shouldBecomeAlive(position)) {
             return Status.ALIVE;
-        } else {
-            return Status.DEAD;
         }
+
+        return Status.DEAD;
+    }
+
+    private shouldBecomeAlive(position: Position) {
+        const aliveNeighbours = this.countAliveNeighbours(position);
+        return this.board.isDead(position) && aliveNeighbours === 3;
+    }
+
+    private shouldStayAlive(position: Position) {
+        const aliveNeighbours = this.countAliveNeighbours(position);
+        return this.board.isAlive(position) && (aliveNeighbours === 2 || aliveNeighbours == 3);
     }
 
     private countAliveNeighbours(position: Position) {
