@@ -94,4 +94,18 @@ describe("Game of Life", () => {
 
         expect(newBoard.isAlive(new Position(1, 1))).toBeTruthy();
     });
+
+    it("next 2 generations", () => {
+        const board: Board = new Board([
+            [ALIVE, ALIVE, ALIVE],
+            [DEAD, DEAD, DEAD],
+            [DEAD, DEAD, DEAD]
+        ]);
+
+        let game = new Game(board);
+        game.next();
+        const twoNextBoard: Board = game.next();
+
+        expect(twoNextBoard.isDead(new Position(1, 1))).toBeTruthy();
+    });
 });

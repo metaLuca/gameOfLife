@@ -2,7 +2,7 @@ import {Status} from "./status";
 import {Position} from "./position";
 
 export class Board {
-    private readonly board: Array<Array<Status>>;
+    private board: Array<Array<Status>>;
 
     constructor(board: Array<Array<Status>>) {
         this.board = board;
@@ -19,13 +19,11 @@ export class Board {
         return !this.isAlive(position);
     }
 
-    public nextGeneration(callback: (position: Position) => Status): Board {
-        return new Board(
-            this.board.map((rowStatus, row) => {
-                return rowStatus.map((columnStatus, column) => {
-                    return callback(new Position(row, column));
-                });
-            })
-        );
+    public nextGeneration(callback: (position: Position) => Status) {
+        this.board = this.board.map((rowStatus, row) => {
+            return rowStatus.map((columnStatus, column) => {
+                return callback(new Position(row, column));
+            });
+        })
     }
 }

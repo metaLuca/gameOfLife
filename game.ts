@@ -10,7 +10,8 @@ export class Game {
     }
 
     next(): Board {
-        return this.board.nextGeneration(position => this.nextCellStatus(position));
+        this.board.nextGeneration(position => this.nextCellStatus(position));
+        return this.board
     }
 
     private nextCellStatus(position: Position): Status {
