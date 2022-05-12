@@ -12,13 +12,13 @@ export class Game {
     }
 
     next(): Board {
-        return this.board.next((position: Position) => this.nextStatusFor(position.row, position.column));
+        return this.board.next(this.nextStatusFor.bind(this));
     }
 
-    private nextStatusFor(row: number, column: number): Status {
-        let aliveNeighbours = this.countAliveNeighbours(row, column);
+    private nextStatusFor(position: Position): Status {
+        let aliveNeighbours = this.countAliveNeighbours(position.row, position.column);
 
-        let aliveNeighboursCount = this.board.isDead({row, column})
+        let aliveNeighboursCount = this.board.isDead(position)
             ? BECOME_ALIVE_NEIGHBOURS_COUNTS
             : STAY_ALIVE_NEIGHBOURS_COUNTS;
 

@@ -1,6 +1,5 @@
 import {Status} from "./types";
 
-//TODO use Position instead of row column
 export interface Position {
     row: number;
     column: number;
@@ -13,11 +12,11 @@ export class Board {
         this.board = board;
     }
 
-    public isAlive(position: Position) {
-        if (!this.board[position.row]) {
+    public isAlive({row, column}: Position) {
+        if (!this.board[row]) {
             return false;
         }
-        return this.board[position.row][position.column] === Status.ALIVE;
+        return this.board[row][column] === Status.ALIVE;
     }
 
     public isDead(position: Position) {
