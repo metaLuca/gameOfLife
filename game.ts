@@ -1,5 +1,6 @@
-import {Status} from "./types";
-import {Board, Position} from "./Board";
+import {Status} from "./status";
+import {Board} from "./board";
+import {Position} from "./position";
 
 const BECOME_ALIVE_NEIGHBOURS_COUNTS = [3];
 const STAY_ALIVE_NEIGHBOURS_COUNTS = [2, 3];
@@ -12,13 +13,13 @@ export class Game {
     }
 
     next(): Board {
-        return this.board.next(this.nextCellStatus.bind(this));
+        return this.board.nextGeneration(position => this.nextCellStatus(position));
     }
 
     private nextCellStatus(position: Position): Status {
-        let aliveNeighbours = this.countAliveNeighbours(position);
+        const aliveNeighbours = this.countAliveNeighbours(position);
 
-        let aliveNeighboursCount = this.board.isDead(position)
+        const aliveNeighboursCount = this.board.isDead(position)
             ? BECOME_ALIVE_NEIGHBOURS_COUNTS
             : STAY_ALIVE_NEIGHBOURS_COUNTS;
 
